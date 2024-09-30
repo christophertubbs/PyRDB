@@ -20,6 +20,8 @@ from dateutil.parser import parse as parse_date
 from dateutil.tz import gettz
 from pandas._typing import ReadCsvBuffer
 
+from .timezones import timezones
+
 SITE_TIMESERIES_ROW: re.Pattern = re.compile(r"# Data provided for site (?P<site_code>\d+)\s*")
 """The regular expression detailing the line that defines the site code for the following data"""
 
@@ -173,6 +175,13 @@ class NormalizeTimeZoneUnawareTransformation(FrameTransformation):
         date: pandas.Timestamp = row[self.__date_column]
         timezone_code = row[self.__timezone_code_column]
         timezone = gettz(timezone_code)
+
+        if timezone is None:
+            timezone = timezones.get(timezone_code)
+
+            if timezone is None:
+                raise ValueError(f"{timezone_code} is not a valid timezone code")
+            
         localized_date = date.tz_localize(timezone)
         utc_date = localized_date.tz_convert(pytz.UTC)
         return utc_date.tz_localize(None)

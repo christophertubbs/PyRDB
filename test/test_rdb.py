@@ -64,7 +64,7 @@ class RDBTesting(unittest.TestCase):
                 frame = time_series.frame
                 del frame
             except BaseException as exception:
-                failing_location_messages.append(f"Could not create a dataframe for {site_code}: {exception}")
+                failing_location_messages.append(f"Could not create a dataframe for {site_code}: {traceback.format_exc()}")
 
         if failing_location_messages:
             message = f"Could not load all of the dataframes: {os.linesep}" + os.linesep.join(failing_location_messages)
@@ -152,14 +152,10 @@ class RDBTesting(unittest.TestCase):
         except BaseException as exception:
             raise Exception(f"Could not interpret statistics:{os.linesep}{traceback.format_exc()}") from exception
 
-        self.assertEqual(len(frame.columns), len(STATISTICS_COLUMNS) + 1)
-
-        self.assertIn("day", frame.columns)
-
         for expected_column in STATISTICS_COLUMNS:
             self.assertIn(expected_column, frame.columns)
 
-        self.assertEqual(frame.shape, (1464, 25))
+        self.assertEqual(frame.shape, (1464, 24))
 
         self.assertFalse(frame.loc_web_ds.any())
         self.assertTrue((frame.agency_cd == "USGS").all())

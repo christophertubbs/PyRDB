@@ -181,7 +181,6 @@ class NormalizeTimeZoneUnawareTransformation(FrameTransformation):
 
             if timezone is None:
                 raise ValueError(f"{timezone_code} is not a valid timezone code")
-            
         localized_date = date.tz_localize(timezone)
         utc_date = localized_date.tz_convert(pytz.UTC)
         return utc_date.tz_localize(None)

@@ -11,8 +11,8 @@ from urllib3.exceptions import MaxRetryError
 from socket import gaierror
 from requests.exceptions import ConnectionError
 
-from pyrdb.rdb import RDB
-from pyrdb.rdb import NormalizeTimeZoneUnawareTransformation
+from pyrdb import RDB
+from pyrdb import NormalizeTimeZoneUnawareTransformation
 
 from test.utility import RESOURCE_DIRECTORY
 

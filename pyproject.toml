@@ -1,6 +1,6 @@
 [project]
 name = "PyRDB"
-version = "0.1.1"
+version = "0.1.2"
 description = "Library used for loading and organizing USGS RDB output"
 readme = "README.md"
 authors = [{ name = "Christopher O. Tubbs", email = "christopherotubbs@gmail.com" }]
